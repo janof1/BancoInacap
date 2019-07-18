@@ -1,6 +1,9 @@
 package cl.inacap.temubank.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,11 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "productos")
@@ -32,15 +36,17 @@ public class Productos {
     @JoinColumn(name = "id_tipo_de_producto", referencedColumnName = "id")
 	private TipoDeProductos tipodeproducto;
 	
-	@JsonIgnore
-	@OneToOne( fetch=FetchType.LAZY, mappedBy = "producto")
-    private Transacciones transaccion;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto", cascade = CascadeType.ALL)
+	@Column(nullable = true)
+    @JsonManagedReference
+    private List<Transacciones> transaccion;
 
 	public Productos() {
 		super();
 	}
 
-	public Productos(Long id, Long saldo, Cuenta cuenta, TipoDeProductos tipodeproducto, Transacciones transaccion) {
+	public Productos(Long id, Long saldo, Cuenta cuenta, TipoDeProductos tipodeproducto,
+			List<Transacciones> transaccion) {
 		super();
 		this.id = id;
 		this.saldo = saldo;
@@ -81,12 +87,12 @@ public class Productos {
 		this.tipodeproducto = tipodeproducto;
 	}
 
-	public Transacciones getTransaccion() {
+	public List<Transacciones> getTransaccion() {
 		return transaccion;
 	}
 
-	public void setTransaccion(Transacciones transaccion) {
+	public void setTransaccion(List<Transacciones> transaccion) {
 		this.transaccion = transaccion;
 	}
-	
+
 }

@@ -35,20 +35,22 @@ public class Cuenta {
     @JsonManagedReference
 	private List<Productos> productos;
 	
-	@JsonIgnore
-	@OneToOne( fetch=FetchType.LAZY, mappedBy = "cuentaOrigen")
-    private Transacciones transaccionOrigen;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuentaOrigen", cascade = CascadeType.ALL)
+	@Column(nullable = true)
+    @JsonManagedReference
+    private List<Transacciones> transaccionOrigen;
 	
-	@JsonIgnore
-	@OneToOne( fetch=FetchType.LAZY, mappedBy = "cuentaDestino")
-    private Transacciones transaccionDestino;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
+	@Column(nullable = true)
+    @JsonManagedReference
+    private List<Transacciones> transaccionDestino;
 	
 	public Cuenta() {
 		super();
 	}
 
 	public Cuenta(Long id, @NotBlank String tipo_cuenta, Cliente cliente, List<Productos> productos,
-			Transacciones transaccionOrigen, Transacciones transaccionDestino) {
+			List<Transacciones> transaccionOrigen, List<Transacciones> transaccionDestino) {
 		super();
 		this.id = id;
 		this.tipo_cuenta = tipo_cuenta;
@@ -90,21 +92,21 @@ public class Cuenta {
 		this.productos = productos;
 	}
 
-	public Transacciones getTransaccionOrigen() {
+	public List<Transacciones> getTransaccionOrigen() {
 		return transaccionOrigen;
 	}
 
-	public void setTransaccionOrigen(Transacciones transaccionOrigen) {
+	public void setTransaccionOrigen(List<Transacciones> transaccionOrigen) {
 		this.transaccionOrigen = transaccionOrigen;
 	}
 
-	public Transacciones getTransaccionDestino() {
+	public List<Transacciones> getTransaccionDestino() {
 		return transaccionDestino;
 	}
 
-	public void setTransaccionDestino(Transacciones transaccionDestino) {
+	public void setTransaccionDestino(List<Transacciones> transaccionDestino) {
 		this.transaccionDestino = transaccionDestino;
 	}
-	
+
 	
 }

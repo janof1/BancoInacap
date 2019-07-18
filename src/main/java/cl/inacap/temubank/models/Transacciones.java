@@ -2,11 +2,15 @@ package cl.inacap.temubank.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="transacciones")
@@ -16,18 +20,21 @@ public class Transacciones {
 	
 	private Date fecha;
 	
-	@OneToOne
-    @JoinColumn(name = "n_cuenta_origen", referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "n_cuenta_origen")
+	@JsonBackReference
 	private Cuenta cuentaOrigen;
-	
-	@OneToOne
-    @JoinColumn(name = "n_cuenta_destino", referencedColumnName = "id")
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "n_cuenta_destino")
+	@JsonBackReference
 	private Cuenta cuentaDestino;
 	
 	private Long monto;
 	
-	@OneToOne
-    @JoinColumn(name = "id_producto", referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_producto")
+	@JsonBackReference
 	private Productos producto;
 	
 	
