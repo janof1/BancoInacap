@@ -1,9 +1,12 @@
 package cl.inacap.temubank.models;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,14 +21,15 @@ public class TipoDeProductos {
 	private String descripcion;
 	
 	@JsonIgnore
-	@OneToOne( fetch=FetchType.LAZY, mappedBy = "tipodeproducto")
-    private Productos productos;
+	@OneToMany( fetch=FetchType.LAZY, mappedBy = "tipodeproducto")
+	@Column(nullable = true)
+	private List<Productos> productos;
 
 	public TipoDeProductos() {
 		super();
 	}
 
-	public TipoDeProductos(Long id, String descripcion, Productos productos) {
+	public TipoDeProductos(Long id, String descripcion, List<Productos> productos) {
 		super();
 		this.id = id;
 		this.descripcion = descripcion;
@@ -48,11 +52,11 @@ public class TipoDeProductos {
 		this.descripcion = descripcion;
 	}
 
-	public Productos getProductos() {
+	public List<Productos> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(Productos productos) {
+	public void setProductos(List<Productos> productos) {
 		this.productos = productos;
 	}
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>Panel de control Temubank</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
+    
+ 	<link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
+ 	
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 	
+  </head>
+
+  <body>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">Administracion TemuBank</a>
+					</div>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-in"></span>
+								LogOut</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<button class="btn btn-md btn-primary btn-block" type="submit">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						Nuevo Cliente
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<h1>Clientes</h1>
+		<br/>
+		<div class="panel panel-default">
+			<div class="panel-heading"></div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Rut</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Email</th>
+						<th>Ciudad</th>
+						<th>N° Cuenta</th>
+						<th>Tipo Cuenta</th>
+						<th>Actions</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cliente : ${clientes}">
+						<td  th:text="${cliente.rut}"></td>
+						<td  th:text="${cliente.nombre}"></td>
+						<td  th:text="${cliente.apellidoPaterno}"></td>
+						<td  th:text="${cliente.email}"></td>
+						<td  th:text="${cliente.ciudad}"></td>
+						<td  th:text="${cliente.cuenta.id}"></td>
+						<td  th:text="${cliente.cuenta.tipo_cuenta}"></td>
+						<td>
+							<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+						
+							<button data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${cliente.id }" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+						</td>
+						
+						<div class="modal modal-warning fade in" th:id="modal-warning+${cliente.id }" >
+							<div class="modal-dialog">
+								<div class="modal-content alert alert-danger">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+										<h5 class="modal-title">Borrar Cliente</h5>
+									</div>
+									<div class="modal-body">
+										<h3>Esta seguro que desea borrar este cliente</h3>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default pull-left"
+											data-dismiss="modal">Close</button>
+										<a type="button" class="btn btn-success"
+											th:href="@{/banco/cliente/eliminar/{id}(id=${cliente.id})}"><i
+											class="fa fa-check"></i>&nbsp;Yes</a>
+									</div>
+								</div>
+							</div>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+
+</body>
+</html>

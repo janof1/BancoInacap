@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hola</title>
+</head>
+<body>
+	<div class="row">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">TemuBank</a>
+				</div>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+							LogOut</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<form action="#" th:action="@{/addClient}" th:object="${cliente}" method="post">
+        
+        <p>Rut:<input type="text" th:field="*{rut}"></p>
+        
+        <p>nombre: <input type="text" th:field="*{nombre}"></p>
+        
+        <p>Apellido p: <input type="text" th:field="*{apellidoPaterno}"></p>
+        <p>Apellido M: <input type="text" th:field="*{apellidoMaterno}"></p>
+        <p>Pass: <input type="text" th:field="*{password}"></p>
+        <p>email: <input type="text" th:field="*{email}"></p>
+        <p>ciudad: <input type="text" th:field="*{ciudad}"></p>
+        <br>
+        <select th:field="*{roles}">
+    		<option th:each="roles : ${roles}" th:value="${roles.id}" th:text="${roles.descripcion}">
+    		</option>
+		</select>
+        <br>
+        <h1>Cuenta </h1>
+        <br>
+        <p>Tipo Cuenta: <input type="text" th:field="*{cuenta.tipo_cuenta}"></p>
+        
+        <input type="hidden" th:field="*{cuenta.transaccionOrigen}">
+        <input type="hidden" th:field="*{cuenta.transaccionDestino}">
+        <br>
+         <h1>Productos </h1>
+         
+         
+          <table>
+            <thead>
+                <tr>
+                    <th> Saldo</th>
+                    <th> Tipo producto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto, itemStat : *{cuenta.productos}">
+                    <td><input th:field="*{cuenta.productos[__${itemStat.index}__].saldo}" /></td>
+                    <td>
+<!--                     	<input th:field="*{cuenta.productos[__${itemStat.index}__].tipodeproducto.id}" /> -->
+                    	<select th:field="*{cuenta.productos[__${itemStat.index}__].tipodeproducto.id}">
+                    		<option value="">Please select...</option>
+    						<option th:each="tipo_producto : ${tipo_producto}" th:value="${tipo_producto.id}" th:text="${tipo_producto.descripcion}">
+    						</option>
+						</select>          	
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+<!--                     	<input th:field="*{cuenta.productos[__${itemStat.index}__].tipodeproducto.id}" /> -->         
+<!--          <p>Monto <input type="text" th:field="*{cuenta.productos['0'].saldo}"></p> -->
+<!--           <select th:field="*{cuenta.productos[__${itemStat.index}__].tipodeproducto"> -->
+<!--     		<option th:each="tipo_producto : ${tipo_producto}" th:value="${tipo_producto.id}" th:text="${tipo_producto.descripcion}"> -->
+<!--     		</option> -->
+<!-- 		</select> -->
+         		
+        <br>
+        <button type="submit">save</button>
+    </form>
+</body>
+</html>

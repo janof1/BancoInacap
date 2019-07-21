@@ -29,10 +29,6 @@ public class Cliente {
 	
 	private String apellidoPaterno;
 	
-	private String apellidoMaterno;
-	
-	private String password;
-	
 	private String email;
 
 	private String ciudad;
@@ -58,24 +54,18 @@ public class Cliente {
 		super();
 	}
 
-	
-
-	public Cliente(Long id, String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String password,
-			String email, String ciudad, List<Roles> roles, Cuenta cuenta) {
+	public Cliente(Long id, String rut, String nombre, String apellidoPaterno, String email, String ciudad,
+			List<Roles> roles, Cuenta cuenta) {
 		super();
 		this.id = id;
 		this.rut = rut;
 		this.nombre = nombre;
 		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.password = password;
 		this.email = email;
 		this.ciudad = ciudad;
 		this.roles = roles;
 		this.cuenta = cuenta;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -107,22 +97,6 @@ public class Cliente {
 
 	public void setApellidoPaterno(String apellidoPaterno) {
 		this.apellidoPaterno = apellidoPaterno;
-	}
-
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
-	}
-
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
@@ -157,5 +131,4 @@ public class Cliente {
 		this.cuenta = cuenta;
 	}
 
-	
 }

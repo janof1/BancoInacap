@@ -22,7 +22,7 @@ public class Cuenta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
+	
 	private String tipo_cuenta;
 	
 	@JsonIgnore
@@ -37,13 +37,15 @@ public class Cuenta {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuentaOrigen", cascade = CascadeType.ALL)
 	@Column(nullable = true)
-    @JsonManagedReference
     private List<Transacciones> transaccionOrigen;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
-	@Column(nullable = true)
-    @JsonManagedReference
+	@Column(nullable = true)	
     private List<Transacciones> transaccionDestino;
+	
+	
+	
+	
 	
 	public Cuenta() {
 		super();

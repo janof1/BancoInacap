@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import cl.inacap.temubank.constant.ViewConstant;
 import cl.inacap.temubank.exception.ClienteNotFoundException;
 import cl.inacap.temubank.models.Cliente;
 import cl.inacap.temubank.repository.ClienteRepository;
@@ -23,6 +25,16 @@ public class ClienteController {
 	// Get All clientes
 	@Autowired
 	ClienteRepository clienteRepository;
+	
+	@GetMapping("/crear")
+	public ModelAndView exampleMAV() {
+		
+		ModelAndView mav = new ModelAndView(ViewConstant.ADD_CLIENTE_VIEW);
+	
+		return mav;
+	}
+	
+	
 	@GetMapping("/clientes")
 	public List<Cliente> getAllClientes(){
 		return (List<Cliente>) clienteRepository.findAll();
@@ -44,11 +56,9 @@ public class ClienteController {
     	Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new ClienteNotFoundException(clienteId));
     	cliente.setRut(clienteUpdate.getRut());
     	cliente.setNombre(clienteUpdate.getNombre());
-    	cliente.setApellidoMaterno(clienteUpdate.getApellidoMaterno());
     	cliente.setApellidoPaterno(clienteUpdate.getApellidoPaterno());
     	cliente.setCiudad(clienteUpdate.getCiudad());
     	cliente.setEmail(clienteUpdate.getEmail());
-    	cliente.setPassword(clienteUpdate.getPassword());
     	cliente.setRoles(clienteUpdate.getRoles());
     	
         

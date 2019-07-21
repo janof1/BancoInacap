@@ -45,7 +45,7 @@ public class TransaccionesController {
 	    	Transacciones transacciones = transaccionesRepository.findById(transaccionId).orElseThrow(() -> new ClienteNotFoundException(transaccionId));
 	    	transacciones.setMonto(transaccionUpdate.getMonto());
 	    	transacciones.setFecha(transaccionUpdate.getFecha());
-	    	transacciones.setTipo_operecion(transaccionUpdate.getTipo_operecion());
+	    	transacciones.setTipo_operacion(transaccionUpdate.getTipo_operacion());
 	   
 	    	
 	        

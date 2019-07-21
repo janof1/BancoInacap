@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="transacciones")
@@ -22,20 +23,18 @@ public class Transacciones {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "n_cuenta_origen")
-	@JsonBackReference
+	@JsonIgnore
 	private Cuenta cuentaOrigen;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "n_cuenta_destino")
-	@JsonBackReference
+	@JsonIgnore
 	private Cuenta cuentaDestino;
 	
 	private Long monto;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_producto")
-	@JsonBackReference
-	private Productos producto;
+	
+	private Long id_producto;
 	
 	
 	private String tipo_operacion;
@@ -44,7 +43,7 @@ public class Transacciones {
 		super();
 	}
 
-	public Transacciones(Long id, Date fecha, Cuenta cuentaOrigen, Cuenta cuentaDestino, Long monto, Productos producto,
+	public Transacciones(Long id, Date fecha, Cuenta cuentaOrigen, Cuenta cuentaDestino, Long monto, Long id_producto,
 			String tipo_operacion) {
 		super();
 		this.id = id;
@@ -52,7 +51,7 @@ public class Transacciones {
 		this.cuentaOrigen = cuentaOrigen;
 		this.cuentaDestino = cuentaDestino;
 		this.monto = monto;
-		this.producto = producto;
+		this.id_producto = id_producto;
 		this.tipo_operacion = tipo_operacion;
 	}
 
@@ -80,14 +79,6 @@ public class Transacciones {
 		this.cuentaOrigen = cuentaOrigen;
 	}
 
-	public Cuenta getCuentaDestino() {
-		return cuentaDestino;
-	}
-
-	public void setCuentaDestino(Cuenta cuentaDestino) {
-		this.cuentaDestino = cuentaDestino;
-	}
-
 	public Long getMonto() {
 		return monto;
 	}
@@ -96,20 +87,23 @@ public class Transacciones {
 		this.monto = monto;
 	}
 
-	public Productos getProducto() {
-		return producto;
+	public Long getId_producto() {
+		return id_producto;
 	}
 
-	public void setProducto(Productos producto) {
-		this.producto = producto;
+	public void setId_producto(Long id_producto) {
+		this.id_producto = id_producto;
 	}
 
-	public String getTipo_operecion() {
+	public String getTipo_operacion() {
 		return tipo_operacion;
 	}
 
-	public void setTipo_operecion(String tipo_operacion) {
+	public void setTipo_operacion(String tipo_operacion) {
 		this.tipo_operacion = tipo_operacion;
 	}
+
+
+
 	
 }
