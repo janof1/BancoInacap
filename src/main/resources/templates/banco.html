@@ -37,17 +37,21 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
+					<h1>Clientes</h1>
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-12">
 				<div class="col-md-2">
-					<button class="btn btn-md btn-primary btn-block" type="submit">
+					<a th:href="@{/banco/cliente/crear}" class="btn btn-md btn-primary btn-block" type="submit">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						Nuevo Cliente
-					</button>
+					</a>
 				</div>
 			</div>
 		</div>
-
-		<h1>Clientes</h1>
-		<br/>
+		<br>
 		<div class="panel panel-default">
 			<div class="panel-heading"></div>
 			<table class="table">
@@ -94,10 +98,10 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default pull-left"
-											data-dismiss="modal">Close</button>
+											data-dismiss="modal">Cerrar</button>
 										<a type="button" class="btn btn-success"
 											th:href="@{/banco/cliente/eliminar/{id}(id=${cliente.id})}"><i
-											class="fa fa-check"></i>&nbsp;Yes</a>
+											class="fa fa-check"></i>&nbsp;Si</a>
 									</div>
 								</div>
 							</div>
