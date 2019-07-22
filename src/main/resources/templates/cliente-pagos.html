@@ -204,7 +204,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h3>Detalle Transacciones</h3>
+				<h3>Detalle Transacciones Realizadas</h3>
 				<table class="table">
 					<thead>
 						<tr>
@@ -223,6 +223,31 @@
 							<th th:text="${transaccion.tipo_operacion}"></th>
 							<th th:text="${transaccion.fecha}"></th>
 						</tr>			
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Detalle Transacciones Recibidas</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>N° cuenta Origen</th>
+							<th>N° cuenta Destino</th>
+							<th>Monto</th>
+							<th>Tipo operacion</th>
+							<th>Fecha</th>
+						<tr>
+					</thead>
+					<tbody>	
+						<tr th:each="transaccionr, itemStat : ${transaccionesRep}">
+							<th th:text="${transaccionr.cuentaOrigen.id}"></th>
+							<th th:text="${transaccionr.cuentaDestino.id}"></th>
+							<th th:text="${transaccionr.monto}"></th>
+							<th th:text="${transaccionr.tipo_operacion}"></th>
+							<th th:text="${transaccionr.fecha}"></th>
+						</tr>		
 					</tbody>
 				</table>
 			</div>

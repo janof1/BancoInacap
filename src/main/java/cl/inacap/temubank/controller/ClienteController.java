@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -48,22 +49,25 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/cliente/transferencia/{id}")
-	public ModelAndView transferencia(@PathVariable(value = "id") Long cuentaId) throws ClienteNotFoundException {
-		
+	public ModelAndView transferencia(@RequestParam(name = "fail", required = false) String fail,
+			@RequestParam(name = "success", required = false) String success, @PathVariable(value = "id") Long cuentaId)
+			throws ClienteNotFoundException {
+
 		ModelAndView mav = new ModelAndView(ViewConstant.CLIENTE_TRANS_VIEW);
 		Cliente ShowCliente = clienteService.getClientById(cuentaId);
 		Transferencia tranf = new Transferencia();
 		tranf.setCuentaOrigen(ShowCliente);
-	
+		
+		mav.addObject("fail", fail);
+		mav.addObject("success", success);
 		mav.addObject("cliente", ShowCliente);
 		mav.addObject("totalContable", clienteService.totalcontable(ShowCliente));
 		mav.addObject("cuentas", clienteService.getAllClients(ShowCliente));
 		mav.addObject("transferencia", tranf);
-		
-	
+
 		return mav;
 	}
-	
+
 	@PostMapping("/cliente/trans")
 	public RedirectView tranferClient( @ModelAttribute("transferencia")  Transferencia transferencia) throws ClienteNotFoundException {
 		
@@ -148,10 +152,11 @@ public class ClienteController {
 		ModelAndView mav = new ModelAndView(ViewConstant.CLIENTE_PAY_VIEW);
 		Cliente ShowCliente = clienteService.getClientById(cuentaId);
 		List<Transacciones> transacciones = clienteService.getTransaccionesById(ShowCliente.getCuenta().getId());
-	
+		List<Transacciones> transaccionesR = clienteService.getTransaccionesByIdDestino(ShowCliente.getCuenta().getId());
 	
 		mav.addObject("cliente", ShowCliente);
 		mav.addObject("transacciones", transacciones);
+		mav.addObject("transaccionesRep", transaccionesR);
 		mav.addObject("totalContable", clienteService.totalcontable(ShowCliente));
 		
 		
@@ -160,10 +165,10 @@ public class ClienteController {
 	}
 	
 	
-//	@GetMapping("/clientes")
-//	public List<Cliente> getAllClientes(){
-//		return (List<Cliente>) clienteRepository.findAll();
-//	}
+	@GetMapping("/clientes")
+	public List<Cliente> getAllClientes(){
+		return (List<Cliente>) clienteRepository.findAll();
+	}
 //	// Create a new Cliente
 //	@PostMapping("/clientes")
 //    public Cliente createCliente(@Valid @RequestBody Cliente cliente) {
@@ -192,15 +197,15 @@ public class ClienteController {
 //    	return updatedCliente;
 //    }
 //
-//    // Delete a Cliente
-//    @DeleteMapping("/clientes/{id}")
-//    public ResponseEntity<?> deleteCliente(@PathVariable(value = "id") Long clienteId) throws ClienteNotFoundException {
-//    	Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new ClienteNotFoundException(clienteId));
-//
-//        clienteRepository.delete(cliente);
-//
-//        return ResponseEntity.ok().build();
-//    }
+    // Delete a Cliente
+    @DeleteMapping("/clientes/{id}")
+    public ResponseEntity<?> deleteCliente(@PathVariable(value = "id") Long clienteId) throws ClienteNotFoundException {
+    	Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new ClienteNotFoundException(clienteId));
+
+        clienteRepository.delete(cliente);
+
+        return ResponseEntity.ok().build();
+    }
 //    
    
 }

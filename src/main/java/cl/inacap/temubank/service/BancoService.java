@@ -20,5 +20,7 @@ public interface BancoService {
 	
 	public abstract Cliente getClientById(Long id) throws ClienteNotFoundException; 
 	
+	public abstract Cliente getClientByRut(String rut) throws ClienteNotFoundException; 
+	
 	
 }

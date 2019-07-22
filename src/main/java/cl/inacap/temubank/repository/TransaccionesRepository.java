@@ -11,5 +11,6 @@ import cl.inacap.temubank.models.Transacciones;
 public interface TransaccionesRepository extends CrudRepository<Transacciones, Long>{
 	
 	List<Transacciones> findByCuentaOrigenId(Long id);
+	List<Transacciones> findByCuentaDestinoId(Long id);
 
 }

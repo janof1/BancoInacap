@@ -89,4 +89,10 @@ public class BancoServiceImpl implements BancoService{
 		return cliente;
 	}
 
+	@Override
+	public Cliente getClientByRut(String rut) throws ClienteNotFoundException {
+		Cliente cliente = clienteRepository.findByRut(rut);
+		return cliente;
+	}
+
 }

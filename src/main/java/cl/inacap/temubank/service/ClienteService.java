@@ -10,6 +10,7 @@ import cl.inacap.temubank.models.Transferencia;
 public interface ClienteService {
 	
 	public abstract List<Transacciones> getTransaccionesById(Long id); 
+	public abstract List<Transacciones> getTransaccionesByIdDestino(Long id);
 	
 	public abstract List<Cliente> getAllClients(Cliente cliente); 
 	

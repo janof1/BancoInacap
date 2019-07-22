@@ -171,4 +171,10 @@ public class ClienteServiceImpl  implements ClienteService{
 		return total;
 	}
 
+	@Override
+	public List<Transacciones> getTransaccionesByIdDestino(Long id) {
+		List<Transacciones> transacciones = transaccionesRepository.findByCuentaDestinoId(id);
+		return transacciones;
+	}
+
 }
