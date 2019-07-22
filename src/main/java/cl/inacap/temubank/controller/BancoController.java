@@ -18,10 +18,12 @@ import cl.inacap.temubank.exception.ClienteNotFoundException;
 import cl.inacap.temubank.models.Cliente;
 import cl.inacap.temubank.models.Cuenta;
 import cl.inacap.temubank.models.Productos;
+import cl.inacap.temubank.models.Transacciones;
 import cl.inacap.temubank.repository.ClienteRepository;
 import cl.inacap.temubank.repository.RolClienteRepository;
 import cl.inacap.temubank.repository.TipoDeProductoRepository;
 import cl.inacap.temubank.service.BancoService;
+import cl.inacap.temubank.service.ClienteService;
 
 @RestController
 public class BancoController {
@@ -34,6 +36,9 @@ public class BancoController {
 	
 	@Autowired
 	TipoDeProductoRepository tipoDeProductoRepository;
+	
+	@Autowired
+	ClienteService clienteService;
 	
 	@GetMapping("/banco")
 	public ModelAndView getBanco(@RequestParam(name="error", required = false)String error,
@@ -105,6 +110,25 @@ public class BancoController {
 	
 		return mav;
 	}
+	
+	@GetMapping("/banco/cliente/ver/{id}")
+	public ModelAndView transacciones(@PathVariable(value = "id") Long cuentaId) throws ClienteNotFoundException {
+		
+		ModelAndView mav = new ModelAndView(ViewConstant.CLIENTE_PAY_VIEW);
+		Cliente ShowCliente = clienteService.getClientById(cuentaId);
+		List<Transacciones> transacciones = clienteService.getTransaccionesById(ShowCliente.getCuenta().getId());
+		List<Transacciones> transaccionesR = clienteService.getTransaccionesByIdDestino(ShowCliente.getCuenta().getId());
+	
+		mav.addObject("cliente", ShowCliente);
+		mav.addObject("transacciones", transacciones);
+		mav.addObject("transaccionesRep", transaccionesR);
+		mav.addObject("totalContable", clienteService.totalcontable(ShowCliente));
+		
+		
+	
+		return mav;
+	}
+	
 	
 	
 	@PostMapping("/banco/cliente/editClient")
