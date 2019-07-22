@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Panel de control Temubank</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Bienvenido [[${cliente.nombre}]] a TemuBank</a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-in"></span>
+                                LogOut</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Informacion cliente</h1>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <a class="btn btn-md btn-primary btn-block" th:href="@{/cliente/{id}(id=${cliente.id})}">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        Informacio
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-md btn-primary btn-block" th:href="@{/cliente/transferencia/{id}(id=${cliente.id})}">
+                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                        Tranferencias
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-md btn-primary btn-block" th:href="@{/cliente/pagos/{id}(id=${cliente.id})}">
+                        <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                        Pagos
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-md btn-primary btn-block" th:href="@{/cliente/transacciones/{id}(id=${cliente.id})}">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        Transacciones
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+           
+            <div class="col-md-12 form-horizontal">
+                    <h3>Datos  personales</h3>
+                    <br>
+                <div class="col-md-4">
+
+                    <div class="form-group form-group-md">
+                        <label class="col-sm-2 control-label" for="rut">Rut:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" th:field="*{cliente.rut}" id="rut" disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-md">
+                        <label class="col-sm-2 control-label" for="nombre">Nombre:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" th:field="*{cliente.nombre}" id="nombre" disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-md">
+                        <label class="col-sm-2 control-label" for="apellido">Apellido:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" th:field="*{cliente.apellidoPaterno}" id="apellido" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group form-group-md">
+                        <label class="col-sm-2 control-label" for="email">Email:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" th:field="*{cliente.email}" id="email" disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-md">
+                        <label class="col-sm-2 control-label" for="Ciudad">Ciudad:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" th:field="*{cliente.Ciudad}" id="Ciudad" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+                <div class="col-md-12 form-horizontal">
+                    <h3>Cuenta</h3>
+                    <br>
+                    <div class="col-md-4">
+                            <div class="form-group form-group-md">
+                                    <label class="col-sm-4 control-label" for="ncuenta">Numero de Cuenta:</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="text" th:field="${cliente.cuenta.id}" id="ncuenta" disabled="true"/>
+                                    </div>
+                            </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <table class="table">
+                            <tbody>
+                                <tr th:each="producto, itemStat : ${cliente.cuenta.productos}">
+                                    <td th:if="${producto.tipodeproducto.id == 2}">Tarjeta de debito</td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}">Monto: </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}" th:text="${producto.saldo}"></td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}"> Total: </td>
+                                    <td th:if="${producto.tipodeproducto.id == 2}" th:text="${producto.saldo}"></td>
+                                </tr>
+                                <tr th:each="producto, itemStat : ${cliente.cuenta.productos}">
+                                    <td th:if="${producto.tipodeproducto.id == 3}">Linea de credito</td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}">Monto:</td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}" th:text="${producto.saldo}"></td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}">Monto Utilizado:</td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}" th:text="${producto.saldoBase}"></td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}"> Total: </td>
+                                    <td th:if="${producto.tipodeproducto.id == 3}" th:text="${producto.saldo - producto.saldoBase}"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>total contable:</td>
+                                    <td th:text="${totalContable}"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr th:each="producto, itemStat : ${cliente.cuenta.productos}">
+                                    <td th:if="${producto.tipodeproducto.id == 1}">Tarjeta de credito</td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}">Monto: </td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}" th:text="${producto.saldo}"></td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}">Monto Utilizado:</td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}" th:text="${producto.saldoBase}"></td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}"> </td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}"> Total: </td>
+                                    <td th:if="${producto.tipodeproducto.id == 1}" th:text="${producto.saldo - producto.saldoBase}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+            </div>
+    </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -5,18 +5,20 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="transacciones")
 public class Transacciones {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private Date fecha;
@@ -103,6 +105,15 @@ public class Transacciones {
 		this.tipo_operacion = tipo_operacion;
 	}
 
+	public Cuenta getCuentaDestino() {
+		return cuentaDestino;
+	}
+
+	public void setCuentaDestino(Cuenta cuentaDestino) {
+		this.cuentaDestino = cuentaDestino;
+	}
+
+	
 
 
 	

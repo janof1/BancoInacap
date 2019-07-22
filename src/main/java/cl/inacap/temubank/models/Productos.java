@@ -22,12 +22,14 @@ public class Productos {
 
 	private Long saldo;
 	
+	private Long saldoBase;
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cuenta")
 	@JsonBackReference
 	private Cuenta cuenta;
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     @JoinColumn(name = "id_tipo_de_producto")
 	private TipoDeProductos tipodeproducto;
 	
@@ -35,54 +37,53 @@ public class Productos {
 		super();
 	}
 
-
-	public Productos(Long id, Long saldo, Cuenta cuenta, TipoDeProductos tipodeproducto) {
+	public Productos(Long id, Long saldo, Long saldoBase, Cuenta cuenta, TipoDeProductos tipodeproducto) {
 		super();
 		this.id = id;
 		this.saldo = saldo;
+		this.saldoBase = saldoBase;
 		this.cuenta = cuenta;
 		this.tipodeproducto = tipodeproducto;
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public Long getSaldo() {
 		return saldo;
 	}
 
-
 	public void setSaldo(Long saldo) {
 		this.saldo = saldo;
 	}
 
+	public Long getSaldoBase() {
+		return saldoBase;
+	}
+
+	public void setSaldoBase(Long saldoBase) {
+		this.saldoBase = saldoBase;
+	}
 
 	public Cuenta getCuenta() {
 		return cuenta;
 	}
 
-
 	public void setCuenta(Cuenta cuenta) {
 		this.cuenta = cuenta;
 	}
-
 
 	public TipoDeProductos getTipodeproducto() {
 		return tipodeproducto;
 	}
 
-
 	public void setTipodeproducto(TipoDeProductos tipodeproducto) {
 		this.tipodeproducto = tipodeproducto;
 	}
-
 	
 }

@@ -12,5 +12,13 @@ public interface BancoService {
 	
 	public abstract List<Cliente> getAllClients();
 	
-	public abstract Boolean dleteClientById(Long id) throws ClienteNotFoundException; 
+	public abstract Boolean deleteClientById(Long id) throws ClienteNotFoundException; 
+	
+	public abstract Cliente editClient(Cliente cliente) throws ClienteNotFoundException; 
+	
+	public abstract Cliente showClientById(Long id) throws ClienteNotFoundException; 
+	
+	public abstract Cliente getClientById(Long id) throws ClienteNotFoundException; 
+	
+	
 }

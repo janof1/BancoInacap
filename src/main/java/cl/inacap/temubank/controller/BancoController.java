@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -15,6 +17,7 @@ import cl.inacap.temubank.exception.ClienteNotFoundException;
 import cl.inacap.temubank.models.Cliente;
 import cl.inacap.temubank.models.Cuenta;
 import cl.inacap.temubank.models.Productos;
+import cl.inacap.temubank.repository.ClienteRepository;
 import cl.inacap.temubank.repository.RolClienteRepository;
 import cl.inacap.temubank.repository.TipoDeProductoRepository;
 import cl.inacap.temubank.service.BancoService;
@@ -70,10 +73,44 @@ public class BancoController {
 		return mav;
 	}
 	
+	
+	@PostMapping("/banco/cliente/addClient")
+	public RedirectView addClient( @ModelAttribute("cliente") Cliente cliente) {
+
+		bancoService.addClient(cliente);
+		return new RedirectView("/banco?save");
+	}
+	
+	
+	@GetMapping("/banco/cliente/editar/{id}")
+	public ModelAndView editarCliente(@PathVariable(value = "id") Long cuentaId) throws ClienteNotFoundException {
+		
+		ModelAndView mav = new ModelAndView(ViewConstant.EDIT_CLIENTE_VIEW);
+		
+		Cliente cliente = bancoService.getClientById(cuentaId);
+		
+	
+		
+		mav.addObject("cliente", cliente);
+		mav.addObject("roles", cliente.getRoles());
+		mav.addObject("tipo_producto", tipoDeProductoRepository.findAll());
+	
+		return mav;
+	}
+	
+	
+	@PostMapping("/banco/cliente/editClient")
+	public RedirectView editClient( @ModelAttribute("cliente") Cliente cliente) throws ClienteNotFoundException {
+
+		bancoService.editClient(cliente);
+		return new RedirectView("/banco?edit");
+	}
+	
+	
 	@GetMapping("/banco/cliente/eliminar/{id}")
 	public RedirectView eliminarCliente(@PathVariable(value = "id") Long clienteId) throws ClienteNotFoundException {
 		
-		bancoService.dleteClientById(clienteId);
+		bancoService.deleteClientById(clienteId);
 		return new RedirectView("/banco");
 	}
 

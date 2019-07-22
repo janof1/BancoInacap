@@ -65,7 +65,7 @@ public class LoginController {
 			if(cliente.getRoles().get(0).getDescripcion().equals("banco")) {
 				path ="/banco";
 			}else {
-				path ="/cliente";
+				path ="/cliente/" + cliente.getId();
 			}
 		}
 		
